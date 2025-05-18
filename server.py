@@ -1,15 +1,15 @@
-from flask import Flask, request, jsonify
-from flask_cors import CORS
+from flask import Flask, request, jsonify, send_from_directory
+import os
 import subprocess
 import uuid
-import os
+from flask_cors import CORS
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='build', static_url_path='')
 CORS(app)
 
 @app.route('/')
-def home():
-    return "Backend is running!"
+def serve():
+    return send_from_directory(app.static_folder, 'index.html')
 
 @app.route('/run', methods=['POST'])
 def run_code():
