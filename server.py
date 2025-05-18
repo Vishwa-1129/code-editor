@@ -7,13 +7,16 @@ import os
 app = Flask(__name__)
 CORS(app)
 
+@app.route('/')
+def home():
+    return "Backend is running!"
+
 @app.route('/run', methods=['POST'])
 def run_code():
     data = request.get_json()
     code = data.get('code')
     user_input = data.get('input', '')
 
-    # Save code to temporary file
     filename = f'temp_{uuid.uuid4().hex}.py'
     with open(filename, 'w') as f:
         f.write(code)
